@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var page = window.location.hash.substr(1);
   if (page == "") page = "home";
   loadPage(page);
-
+  
   function loadPage(page) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -53,6 +53,8 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     xhttp.open("GET", "pages/" + page + ".html", true);
     xhttp.send();
+    if(page == 'home') loadStandings()
+    if(page == 'matches') loadMatches()
   }
 
 })

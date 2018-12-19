@@ -14,26 +14,19 @@
   <!-- Navigasi -->
   <nav class="green">
     <div class="nav-wrapper container">
-      <a href="#!" class="brand-logo">Footbal PWA</a>
+      <a href="#!" class="brand-logo">Football PWA</a>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a id="news" class="waves-effect" href="#">News</a></li>
-        <li><a id="info" class="waves-effect" href="#">Info</a></li>
-        <li><a id="tutorial" class="waves-effect" href="#">Tutorial</a></li>
-      </ul>
-    </div>
-    <!-- Menu yang tampil saat dibuka di mobile -->
-    <ul id="nav-mobile" class="sidenav">
-      <li><a id="news" class="waves-effect" href="#">News</a></li>
-      <li><a id="info" class="waves-effect" href="#">Info</a></li>
-      <li><a id="tutorial" class="waves-effect" href="#">Tutorial</a></li>
-    </ul>
+      <ul class="topnav right hide-on-med-and-down"></ul>
+      <ul class="sidenav" id="nav-mobile"></ul>
   </nav>
   <!-- Akhir Navigasi -->
   <!-- Isi Konten Dinamis -->
+  <div class="container" id="body-content"></div>
   <!-- Akhir Isi Konten -->
   <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+  <script type="text/javascript" src="/js/nav.js"></script>
   <script type="text/javascript" src="/js/api.js"></script>
+  <script type="text/javascript" src="/js/main.js"></script>
 
   <!-- Inisialisasi plugin sidenav  -->
   <script type="text/javascript">
@@ -57,8 +50,6 @@
     } else {
       console.log("ServiceWorker belum didukung browser ini.")
     }
-
-    getStandings();
   </script>
 </body>
 
