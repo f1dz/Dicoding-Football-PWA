@@ -45,7 +45,6 @@ var loadStandings = () => {
         </div>
         </div>
       `
-
     });
     document.getElementById("standings").innerHTML = html;
   })
@@ -56,8 +55,6 @@ var loadMatches = () => {
   matches.then(data => {
 
     var matchdays = groupBy(data.matches, 'matchday');
-    console.log(matchdays);
-
 
     html = ''
     for (const key in matchdays) {
@@ -91,6 +88,33 @@ var loadMatches = () => {
   })
 }
 
+var loadTeams = () => {
+  var teams = getTeams()
+
+  teams.then(data => {
+    console.log(data);
+    
+    var html = ''
+    html += '<div class="row">'
+    data.teams.forEach(team => {
+      html += `
+      <div class="col s12 m6 l6">
+        <div class="card">
+          <div class="card-content">
+            <div class="center"><img width="64" height="64" src="${team.crestUrl || '/img/empty_badge.svg'}"></div>
+            <div class="center flow-text">${team.name}</div>
+            <div class="center">${team.area.name}</div>
+            <div class="center"><a href="${team.website}" target="_blank">${team.website}</a></div>
+          </div>
+        </div>
+      </div>
+    `
+    })
+    html += "</div>"
+    document.getElementById("teams-content").innerHTML = html;
+  })
+}
+
 var groupBy = function (xs, key) {
   return xs.reduce(function (rv, x) {
     (rv[x[key]] = rv[x[key]] || []).push(x);
@@ -99,5 +123,5 @@ var groupBy = function (xs, key) {
 };
 
 var dateToDMY = date => {
-  return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
+  return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
 }

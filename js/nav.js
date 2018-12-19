@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.send();
     if(page == 'home') loadStandings()
     if(page == 'matches') loadMatches()
+    if(page == 'teams') loadTeams()
   }
 
 })
