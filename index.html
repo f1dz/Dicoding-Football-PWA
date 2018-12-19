@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Football PWA</title>
+  <link rel="manifest" href="/manifest.json">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+  <!-- Navigasi -->
+  <nav class="green">
+    <div class="nav-wrapper container">
+      <a href="#!" class="brand-logo">Footbal PWA</a>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a id="news" class="waves-effect" href="#">News</a></li>
+        <li><a id="info" class="waves-effect" href="#">Info</a></li>
+        <li><a id="tutorial" class="waves-effect" href="#">Tutorial</a></li>
+      </ul>
+    </div>
+    <!-- Menu yang tampil saat dibuka di mobile -->
+    <ul id="nav-mobile" class="sidenav">
+      <li><a id="news" class="waves-effect" href="#">News</a></li>
+      <li><a id="info" class="waves-effect" href="#">Info</a></li>
+      <li><a id="tutorial" class="waves-effect" href="#">Tutorial</a></li>
+    </ul>
+  </nav>
+  <!-- Akhir Navigasi -->
+  <!-- Isi Konten Dinamis -->
+  <!-- Akhir Isi Konten -->
+  <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+  <script type="text/javascript" src="/js/api.js"></script>
+
+  <!-- Inisialisasi plugin sidenav  -->
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+    });
+  </script>
+
+  <script>
+    // Memeriksa API service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then(function () {
+        console.log('Pendaftaran ServiceWorker berhasil');
+      }, function () {
+        console.log('Pendaftaran ServiceWorker gagal');
+      });
+      navigator.serviceWorker.ready.then(function () {
+        console.log('ServiceWorker sudah siap bekerja.');
+      });
+    } else {
+      console.log("ServiceWorker belum didukung browser ini.")
+    }
+
+    getStandings();
+  </script>
+</body>
+
+</html>
