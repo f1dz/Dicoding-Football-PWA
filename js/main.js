@@ -104,7 +104,7 @@ var loadTeams = () => {
             <div class="center"><img width="64" height="64" src="${team.crestUrl || '/img/empty_badge.svg'}"></div>
             <div class="center flow-text">${team.name}</div>
             <div class="center">${team.area.name}</div>
-            <div class="center">${team.website}</div>
+            <div class="center"><a href="${team.website}" target="_blank">${team.website}</a></div>
           </div>
         </div>
       </div>
