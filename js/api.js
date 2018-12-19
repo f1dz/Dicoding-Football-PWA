@@ -3,6 +3,7 @@ const LEAGUE_ID = 2001
 var base_url = "https://api.football-data.org/v2/";
 var standing_ep = `${base_url}competitions/${LEAGUE_ID}/standings?standingType=TOTAL`
 var matches_ep = `${base_url}competitions/${LEAGUE_ID}/matches`
+var teams_ep = `${base_url}competitions/${LEAGUE_ID}/teams`
 
 var fetchApi = url => {
   return fetch(url, {
@@ -38,6 +39,12 @@ var getStandings = () => {
 
 var getMatches = () => {
   return fetchApi(matches_ep)
+    .then(status)
+    .then(json)
+}
+
+var getTeams = () => {
+  return fetchApi(teams_ep)
     .then(status)
     .then(json)
 }
