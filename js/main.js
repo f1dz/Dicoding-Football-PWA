@@ -7,7 +7,7 @@ var loadStandings = () => {
       standing.table.forEach(result => {
         detail += `<tr>
             <td>${result.position}</td>
-            <td><img class="responsive-img" width="24" height="24" src='/img/empty_badge.svg'> ${result.team.name}</td>
+            <td><img class="responsive-img" width="24" height="24" src="${ result.team.crestUrl || '/img/empty_badge.svg'}"> ${result.team.name}</td>
             <td>${result.playedGames}</td>
             <td>${result.won}</td>
             <td>${result.draw}</td>
@@ -92,7 +92,6 @@ var loadTeams = () => {
   var teams = getTeams()
 
   teams.then(data => {
-    console.log(data);
     
     var html = ''
     html += '<div class="row">'
