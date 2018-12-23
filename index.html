@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>Football PWA</title>
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="manifest.json">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
@@ -23,10 +23,10 @@
   <!-- Isi Konten Dinamis -->
   <div class="container" id="body-content"></div>
   <!-- Akhir Isi Konten -->
-  <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
-  <script type="text/javascript" src="/js/nav.js"></script>
-  <script type="text/javascript" src="/js/api.js"></script>
-  <script type="text/javascript" src="/js/main.js"></script>
+  <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/nav.js"></script>
+  <script type="text/javascript" src="js/api.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
 
   <!-- Inisialisasi plugin sidenav  -->
   <script type="text/javascript">
@@ -39,7 +39,7 @@
   <script>
     // Memeriksa API service worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then(function () {
+      navigator.serviceWorker.register('sw.js').then(function () {
         console.log('Pendaftaran ServiceWorker berhasil');
       }, function () {
         console.log('Pendaftaran ServiceWorker gagal');
