@@ -60,25 +60,25 @@ var loadMatches = () => {
     for (const key in matchdays) {
       if (key != 'null') {
         html += `
-              <div><b>Group stage - ${key} of 6</b></div>
-              <div class="card">
-              <div class="card-content">
+              <h5>Group stage - ${key} of 6</h5>
               <div class="row">
             `
         matchdays[key].forEach(match => {
           html += `
-          <div class="col s12 m6 l6" style="border:rgba(0,0,0,.2) solid 1px">
+          <div class="col s12 m6 l6">
+          <div class="card horizontal">
+              <div class="card-content">
             <div style="text-align: center"><h6>${dateToDMY(new Date(match.utcDate))}</h6></div>
               <div class="col s10">${match.homeTeam.name}</div>
               <div class="col s2">${match.score.fullTime.homeTeam}</div>
               <div class="col s10">${match.awayTeam.name}</div>
               <div class="col s2">${match.score.fullTime.awayTeam}</div>
           </div>
+          </div>
+        </div>
             `
         });
         html += `
-          </div>
-        </div>
         </div>`
       }
 
