@@ -1,12 +1,14 @@
-var CACHE_NAME = 'football-pwa-v5'
+var CACHE_NAME = 'football-pwa-v6'
 
 var urlsToCache = [
   '/',
   '/img/ball.png',
   '/img/empty_badge.svg',
+  '/css/main.css',
   '/js/main.js',
   '/js/nav.js',
   '/js/api.js',
+  '/js/idb.js',
   '/pages/home.html',
   '/pages/teams.html',
   '/pages/matches.html',

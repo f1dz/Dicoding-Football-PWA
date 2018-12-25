@@ -1,3 +1,5 @@
+var matchesData;
+
 var loadStandings = () => {
   var standings = getStandings()
   standings.then(data => {
@@ -53,7 +55,7 @@ var loadStandings = () => {
 var loadMatches = () => {
   var matches = getMatches()
   matches.then(data => {
-
+    matchesData = data;
     var matchdays = groupBy(data.matches, 'matchday');
 
     html = ''
@@ -66,16 +68,19 @@ var loadMatches = () => {
         matchdays[key].forEach(match => {
           html += `
           <div class="col s12 m6 l6">
-          <div class="card horizontal">
-              <div class="card-content">
-            <div style="text-align: center"><h6>${dateToDMY(new Date(match.utcDate))}</h6></div>
-              <div class="col s10">${match.homeTeam.name}</div>
-              <div class="col s2">${match.score.fullTime.homeTeam}</div>
-              <div class="col s10">${match.awayTeam.name}</div>
-              <div class="col s2">${match.score.fullTime.awayTeam}</div>
+            <div class="card">
+              <div class="card-content card-match">
+              <div style="text-align: center"><h6>${dateToDMY(new Date(match.utcDate))}</h6></div>
+                <div class="col s10">${match.homeTeam.name}</div>
+                <div class="col s2">${match.score.fullTime.homeTeam}</div>
+                <div class="col s10">${match.awayTeam.name}</div>
+                <div class="col s2">${match.score.fullTime.awayTeam}</div>
+              </div>
+              <div class="card-action">
+              <a class="waves-effect waves-light btn-small" onclick="insertMatchListener(${match.id})"><i class="material-icons left">star</i>Add to Favorite</a>
+              </div>
+            </div>
           </div>
-          </div>
-        </div>
             `
         });
         html += `
@@ -112,6 +117,38 @@ var loadTeams = () => {
     html += "</div>"
     document.getElementById("teams-content").innerHTML = html;
   })
+}
+
+// database operations
+var dbx = idb.open('football', 1, upgradeDb => {
+  switch (upgradeDb.oldVersion) {
+    case 0:
+      upgradeDb.createObjectStore('matches', {'keyPath': 'id'})
+      upgradeDb.createObjectStore('teams', {'keyPath': 'id'})
+  }
+});
+
+var insertMatch = (match) => {
+  console.log("1: ",match);
+  
+  dbx.then(db => {
+    console.log("2: ", match);
+    var tx = db.transaction('matches', 'readwrite');
+    var store = tx.objectStore('matches')
+    match.createdAt = new Date().getTime()
+    store.put(match)
+    return tx.complete;
+  }).then(() => {
+    M.toast({html: `Pertandingan ${match.homeTeam.name} VS ${match.awayTeam.name}\nberhasil disimpan!`})
+    console.log('Pertandingan berhasil disimpan');
+  }).catch(err => {
+    console.error('Pertandingan gagal disimpan', err);
+  });
+}
+
+var insertMatchListener = matchId => {
+  var match = matchesData.matches.filter(el => el.id == matchId)[0]
+  insertMatch(match)
 }
 
 var groupBy = function (xs, key) {
