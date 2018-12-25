@@ -13,3 +13,7 @@
   color: green;
   font-weight: 300;
 }
+
+.card-content > .center > img{
+  object-fit: contain;
+}

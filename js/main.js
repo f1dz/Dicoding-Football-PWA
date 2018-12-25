@@ -1,4 +1,5 @@
 var matchesData;
+var teamData;
 
 var loadStandings = () => {
   showLoader();
@@ -103,7 +104,7 @@ var loadTeams = () => {
   var teams = getTeams()
 
   teams.then(data => {
-
+    teamData = data;
     var html = ''
     html += '<div class="row">'
     data.teams.forEach(team => {
@@ -115,6 +116,9 @@ var loadTeams = () => {
             <div class="center flow-text">${team.name}</div>
             <div class="center">${team.area.name}</div>
             <div class="center"><a href="${team.website}" target="_blank">${team.website}</a></div>
+          </div>
+          <div class="card-action right-align">
+              <a class="waves-effect waves-light btn-small green" onclick="insertTeamListener(${team.id})"><i class="material-icons left">star</i>Add to Favorite</a>
           </div>
         </div>
       </div>
@@ -154,6 +158,38 @@ var loadFavMatch = () => {
     })
     html += "</div>"
     document.getElementById("header-title").innerHTML = 'Favorites Match';
+    document.getElementById("main-content").innerHTML = html;
+    hideLoader()
+  })
+}
+
+var loadFavTeams = () => {
+  showLoader()
+  var teams = getFavTeams()
+
+  teams.then(data => {
+    teamData = data;
+    var html = ''
+    html += '<div class="row">'
+    data.forEach(team => {
+      html += `
+      <div class="col s12 m6 l6">
+        <div class="card">
+          <div class="card-content">
+            <div class="center"><img width="64" height="64" src="${team.crestUrl || '/img/empty_badge.svg'}"></div>
+            <div class="center flow-text">${team.name}</div>
+            <div class="center">${team.area.name}</div>
+            <div class="center"><a href="${team.website}" target="_blank">${team.website}</a></div>
+          </div>
+          <div class="card-action right-align">
+              <a class="waves-effect waves-light btn-small red" onclick="deleteTeamListener(${team.id})"><i class="material-icons left">delete</i>Delete</a>
+          </div>
+        </div>
+      </div>
+    `
+    })
+    html += "</div>"
+    document.getElementById("header-title").innerHTML = 'Favorite Teams';
     document.getElementById("main-content").innerHTML = html;
     hideLoader()
   })
@@ -205,6 +241,43 @@ var getFavMatch = () => {
   })
 }
 
+var insertTeam = (team) => {
+  dbx.then(db => {
+    var tx = db.transaction('teams', 'readwrite');
+    var store = tx.objectStore('teams')
+    team.createdAt = new Date().getTime()
+    store.put(team)
+    return tx.complete;
+  }).then(() => {
+    M.toast({ html: `${team.name} berhasil disimpan!` })
+    console.log('Pertandingan berhasil disimpan');
+  }).catch(err => {
+    console.error('Pertandingan gagal disimpan', err);
+  });
+}
+
+var deleteTeam = (teamId) => {
+  dbx.then(db => {
+    var tx = db.transaction('teams', 'readwrite');
+    var store = tx.objectStore('teams');
+    store.delete(teamId);
+    return tx.complete;
+  }).then(() => {
+    M.toast({ html: 'Team has been deleted!' });
+    loadFavTeams();
+  }).catch(err => {
+    console.error('Error: ', err);
+  });
+}
+
+var getFavTeams = () => {
+  return dbx.then(db => {
+    var tx = db.transaction('teams', 'readonly');
+    var store = tx.objectStore('teams');
+    return store.getAll();
+  })
+}
+
 var insertMatchListener = matchId => {
   var match = matchesData.matches.filter(el => el.id == matchId)[0]
   insertMatch(match)
@@ -214,6 +287,18 @@ var deleteMatchListener = matchId => {
   var c = confirm("Delete this match?")
   if (c == true) {
     deleteMatch(matchId);
+  }
+}
+
+var insertTeamListener = teamId => {
+  var team = teamData.teams.filter(el => el.id == teamId)[0]
+  insertTeam(team);
+}
+
+var deleteTeamListener = teamId => {
+  var c = confirm("Delete this team?")
+  if (c == true) {
+    deleteTeam(teamId);
   }
 }
 
