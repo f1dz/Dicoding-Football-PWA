@@ -1,6 +1,7 @@
 var matchesData;
 
 var loadStandings = () => {
+  showLoader();
   var standings = getStandings()
   standings.then(data => {
     var html = ''
@@ -50,10 +51,12 @@ var loadStandings = () => {
     });
     document.getElementById("header-title").innerHTML = 'Standings';
     document.getElementById("main-content").innerHTML = html;
+    hideLoader()
   })
 }
 
 var loadMatches = () => {
+  showLoader()
   var matches = getMatches()
   matches.then(data => {
     matchesData = data;
@@ -91,11 +94,12 @@ var loadMatches = () => {
     }
     document.getElementById("header-title").innerHTML = 'Matches';
     document.getElementById("main-content").innerHTML = html;
-
+    hideLoader()
   })
 }
 
 var loadTeams = () => {
+  showLoader()
   var teams = getTeams()
 
   teams.then(data => {
@@ -119,10 +123,12 @@ var loadTeams = () => {
     html += "</div>"
     document.getElementById("header-title").innerHTML = 'Teams';
     document.getElementById("main-content").innerHTML = html;
+    hideLoader()
   })
 }
 
 var loadFavMatch = () => {
+  showLoader()
   var matches = getFavMatch()
   
     matches.then(data => {
@@ -149,6 +155,7 @@ var loadFavMatch = () => {
     html += "</div>"
     document.getElementById("header-title").innerHTML = 'Favorites Match';
     document.getElementById("main-content").innerHTML = html;
+    hideLoader()
   })
 }
 
@@ -208,6 +215,25 @@ var deleteMatchListener = matchId => {
   if (c == true) {
     deleteMatch(matchId);
   }
+}
+
+var showLoader = () => {
+  var html = `<div class="preloader-wrapper medium active">
+              <div class="spinner-layer spinner-green-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+              </div>`
+    document.getElementById("loader").innerHTML = html;
+}
+
+var hideLoader = () => {
+  document.getElementById("loader").innerHTML = '';
 }
 
 var groupBy = function (xs, key) {

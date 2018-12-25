@@ -43,5 +43,4 @@ document.addEventListener("DOMContentLoaded", function () {
     if(page == 'teams') loadTeams()
     if(page == 'fav-match') loadFavMatch()
   }
-
 })
