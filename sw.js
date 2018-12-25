@@ -1,4 +1,4 @@
-var CACHE_NAME = 'football-pwa-v6'
+var CACHE_NAME = 'football-pwa-v7'
 
 var urlsToCache = [
   '/',
@@ -9,9 +9,6 @@ var urlsToCache = [
   '/js/nav.js',
   '/js/api.js',
   '/js/idb.js',
-  '/pages/home.html',
-  '/pages/teams.html',
-  '/pages/matches.html',
   '/nav.html',
   '/index.html',
   '/materialize/css/materialize.min.css',
