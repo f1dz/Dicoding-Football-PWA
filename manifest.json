@@ -9,8 +9,13 @@
   "icons": [
       {
           "src": "/img/ball.png",
-          "sizes": "500x502",
+          "sizes": "500x500",
           "type": "image/png"
-      }
-  ]
+      },{
+        "src": "/img/ball-144px.png",
+        "sizes": "144x144",
+        "type": "image/png"
+    }
+  ],
+  "gcm_sender_id": "943679948716"
 }

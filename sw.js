@@ -1,4 +1,4 @@
-var CACHE_NAME = 'football-pwa-v7'
+var CACHE_NAME = 'football-pwa-v9'
 
 var urlsToCache = [
   '/',
@@ -49,4 +49,30 @@ self.addEventListener("activate", event => {
       )
     })
   )
+});
+
+self.addEventListener('push', event => {
+  var body;
+
+  console.log(event);
+
+  if(event.data) {
+    body = event.data.text()
+  } else {
+    body = "This is push message"
+  }
+
+  var options = {
+    body: body,
+    icon: '/img/ball.png',
+    vibrate: [500, 50, 100],
+    data: {
+      dateOfArrival: Date.now(),
+      primaryKey: 1
+    }
+  }
+
+  event.waitUntil(
+    self.registration.showNotification('Push Notification', options)
+  );
 });

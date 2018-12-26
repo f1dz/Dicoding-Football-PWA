@@ -156,6 +156,9 @@ var loadFavMatch = () => {
           </div>
             `
     })
+
+    if(data.length == 0) html += '<h6 class="center-align">No favorite match found!</6>'
+
     html += "</div>"
     document.getElementById("header-title").innerHTML = 'Favorites Match';
     document.getElementById("main-content").innerHTML = html;
@@ -188,6 +191,9 @@ var loadFavTeams = () => {
       </div>
     `
     })
+
+    if(data.length == 0) html += '<h6 class="center-align">No favorite team found!</6>'
+
     html += "</div>"
     document.getElementById("header-title").innerHTML = 'Favorite Teams';
     document.getElementById("main-content").innerHTML = html;
@@ -331,3 +337,7 @@ var groupBy = function (xs, key) {
 var dateToDMY = date => {
   return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
 }
+
+// Init
+loadMatches()
+loadTeams()
