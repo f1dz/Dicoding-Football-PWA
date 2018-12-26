@@ -1,4 +1,4 @@
-var CACHE_NAME = 'football-pwa-v8'
+var CACHE_NAME = 'football-pwa-v9'
 
 var urlsToCache = [
   '/',
