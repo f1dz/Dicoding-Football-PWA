@@ -331,3 +331,8 @@ var groupBy = function (xs, key) {
 var dateToDMY = date => {
   return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
 }
+
+// Init
+loadMatches()
+loadTeams()
+loadStandings()
