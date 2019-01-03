@@ -11,6 +11,11 @@ var urlsToCache = [
   '/js/idb.js',
   '/nav.html',
   '/index.html',
+  '/index.html#home',
+  '/index.html#matches',
+  '/index.html#teams',
+  '/index.html#fav-team',
+  '/index.html#fav-match',
   '/materialize/css/materialize.min.css',
   '/materialize/js/materialize.min.js'
 ]
