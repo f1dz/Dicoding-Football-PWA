@@ -2,7 +2,7 @@
   "name": "Football PWA",
   "short_name": "Football",
   "description": "Aplikasi Informasi Sepakbola",
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#00897B",
   "theme_color": "#00897B",
