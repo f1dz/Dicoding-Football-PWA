@@ -41,6 +41,14 @@ if(workbox) {
     new RegExp('https://api.football-data.org/v2/'),
     workbox.strategies.staleWhileRevalidate()
   )
+
+  // Caching Google Fonts
+  workbox.routing.registerRoute(
+    /^https:\/\/fonts\.googleapis\.com/,
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: 'google-fonts-stylesheets',
+    })
+  );
 }
 
 self.addEventListener('push', event => {
