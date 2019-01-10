@@ -15,22 +15,24 @@ var urlsToCache = [
   { url: '/materialize/js/materialize.min.js', revision: '1' },
 ]
 
-if(workbox) {
-  console.log('Workbox berhaisl dimuat');
+if(workbox){
   // Force development builds
-  // workbox.setConfig({ debug: true });
+  //workbox.setConfig({ debug: true });
   // The most verbose - displays all logs.
-  // workbox.core.setLogLevel(workbox.core.LOG_LEVELS.debug);
+  //workbox.core.setLogLevel(workbox.core.LOG_LEVELS.debug);
   
   workbox.precaching.precacheAndRoute(urlsToCache);
 
   workbox.routing.registerRoute(
-    /(.*)\.(png|jpg|jpeg|svg|gif)/,
+    /.*(?:png|gif|jpg|jpeg|svg)$/,
     workbox.strategies.cacheFirst({
       cacheName: 'images-cache',
       plugins: [
+        new workbox.cacheableResponse.Plugin({
+          statuses: [0, 200]
+        }),
         new workbox.expiration.Plugin({
-          maxEntries: 250,
+          maxEntries: 100,
           maxAgeSeconds: 30 * 24 * 60 * 60,
         }),
       ]
@@ -44,7 +46,7 @@ if(workbox) {
 
   // Caching Google Fonts
   workbox.routing.registerRoute(
-    /^https:\/\/fonts\.googleapis\.com/,
+    /.*(?:googleapis|gstatic)\.com/,
     workbox.strategies.staleWhileRevalidate({
       cacheName: 'google-fonts-stylesheets',
     })
