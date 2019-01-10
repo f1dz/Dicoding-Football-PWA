@@ -5,6 +5,10 @@ var loadStandings = () => {
   showLoader();
   var standings = getStandings()
   standings.then(data => {
+
+    var str = JSON.stringify(data).replace(/http:/g, 'https:');
+    data = JSON.parse(str);
+
     var html = ''
     data.standings.forEach(standing => {
       var detail = ''
@@ -104,7 +108,10 @@ var loadTeams = () => {
   var teams = getTeams()
 
   teams.then(data => {
-    teamData = data;
+    var str = JSON.stringify(data).replace(/http:/g, 'https:');
+    data = JSON.parse(str);
+    
+    teamData = data
     var html = ''
     html += '<div class="row">'
     data.teams.forEach(team => {

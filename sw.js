@@ -1,60 +1,57 @@
-var CACHE_NAME = 'football-pwa-v9'
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 
 var urlsToCache = [
-  '/',
-  '/img/ball.png',
-  '/img/empty_badge.svg',
-  '/css/main.css',
-  '/js/main.js',
-  '/js/nav.js',
-  '/js/api.js',
-  '/js/idb.js',
-  '/nav.html',
-  '/index.html',
-  '/index.html#home',
-  '/index.html#matches',
-  '/index.html#teams',
-  '/index.html#fav-team',
-  '/index.html#fav-match',
-  '/materialize/css/materialize.min.css',
-  '/materialize/js/materialize.min.js'
+  { url: '/', revision: '1' },
+  { url: '/img/ball.png', revision: '1' },
+  { url: '/img/empty_badge.svg', revision: '1' },
+  { url: '/css/main.css', revision: '1' },
+  { url: '/js/main.js', revision: '1' },
+  { url: '/js/nav.js', revision: '1' },
+  { url: '/js/api.js', revision: '1' },
+  { url: '/js/idb.js', revision: '1' },
+  { url: '/nav.html', revision: '1' },
+  { url: '/index.html', revision: '1' },
+  { url: '/materialize/css/materialize.min.css', revision: '1' },
+  { url: '/materialize/js/materialize.min.js', revision: '1' },
 ]
 
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
-    })
-  )
-});
+if(workbox){
+  // Force development builds
+  //workbox.setConfig({ debug: true });
+  // The most verbose - displays all logs.
+  //workbox.core.setLogLevel(workbox.core.LOG_LEVELS.debug);
+  
+  workbox.precaching.precacheAndRoute(urlsToCache);
 
-self.addEventListener('fetch', (event) => {
-  event.respondWith(async function () {
-    const cache = await caches.open(CACHE_NAME);
-    const cachedResponse = await cache.match(event.request);
-    if (cachedResponse) return cachedResponse;
-    const networkResponse = await fetch(event.request);
-    event.waitUntil(
-      cache.put(event.request, networkResponse.clone())
-    );
-    return networkResponse;
-  }());
-});
-
-self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName != CACHE_NAME) {
-            console.log("ServiceWorker: cache " + cacheName + " dihapus");
-            return caches.delete(cacheName)
-          }
-        })
-      )
+  workbox.routing.registerRoute(
+    /.*(?:png|gif|jpg|jpeg|svg)$/,
+    workbox.strategies.cacheFirst({
+      cacheName: 'images-cache',
+      plugins: [
+        new workbox.cacheableResponse.Plugin({
+          statuses: [0, 200]
+        }),
+        new workbox.expiration.Plugin({
+          maxEntries: 100,
+          maxAgeSeconds: 30 * 24 * 60 * 60,
+        }),
+      ]
     })
+  );
+  
+  workbox.routing.registerRoute(
+    new RegExp('https://api.football-data.org/v2/'),
+    workbox.strategies.staleWhileRevalidate()
   )
-});
+
+  // Caching Google Fonts
+  workbox.routing.registerRoute(
+    /.*(?:googleapis|gstatic)\.com/,
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: 'google-fonts-stylesheets',
+    })
+  );
+}
 
 self.addEventListener('push', event => {
   var body;
