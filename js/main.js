@@ -15,7 +15,7 @@ var loadStandings = () => {
       standing.table.forEach(result => {
         detail += `<tr>
             <td>${result.position}</td>
-            <td><img class="responsive-img" width="24" height="24" src="${ result.team.crestUrl || '/img/empty_badge.svg'}"> ${result.team.name}</td>
+            <td><img class="responsive-img" width="24" height="24" src="${ result.team.crestUrl || 'img/empty_badge.svg'}"> ${result.team.name}</td>
             <td>${result.playedGames}</td>
             <td>${result.won}</td>
             <td>${result.draw}</td>
@@ -119,7 +119,7 @@ var loadTeams = () => {
       <div class="col s12 m6 l6">
         <div class="card">
           <div class="card-content">
-            <div class="center"><img width="64" height="64" src="${team.crestUrl || '/img/empty_badge.svg'}"></div>
+            <div class="center"><img width="64" height="64" src="${team.crestUrl || 'img/empty_badge.svg'}"></div>
             <div class="center flow-text">${team.name}</div>
             <div class="center">${team.area.name}</div>
             <div class="center"><a href="${team.website}" target="_blank">${team.website}</a></div>
@@ -186,7 +186,7 @@ var loadFavTeams = () => {
       <div class="col s12 m6 l6">
         <div class="card">
           <div class="card-content">
-            <div class="center"><img width="64" height="64" src="${team.crestUrl || '/img/empty_badge.svg'}"></div>
+            <div class="center"><img width="64" height="64" src="${team.crestUrl || 'img/empty_badge.svg'}"></div>
             <div class="center flow-text">${team.name}</div>
             <div class="center">${team.area.name}</div>
             <div class="center"><a href="${team.website}" target="_blank">${team.website}</a></div>
